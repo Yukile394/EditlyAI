@@ -26,7 +26,11 @@ android {
     buildTypes {
         debug {
             isMinifyEnabled = false
-            applicationIdSuffix = ".debug"
+            // NOT: applicationIdSuffix ".debug" KASITLI OLARAK KALDIRILDI.
+            // Google Services (google-services.json) paket adına göre eşleşme
+            // arar; suffix eklenirse "com.editlyai.app.debug" için de ayrı bir
+            // client girdisi gerekirdi. Basitlik için debug/release aynı
+            // applicationId'yi kullanıyor (aynı anda cihaza kurulamazlar).
         }
         release {
             isMinifyEnabled = true
