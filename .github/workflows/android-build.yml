@@ -1,0 +1,50 @@
+name: Android CI - APK Build
+
+# Her main/master'a push'ta ve her Pull Request'te otomatik derleme yapar.
+# Ayrıca Actions sekmesinden manuel olarak da tetiklenebilir (workflow_dispatch).
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    name: Build Debug & Release APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repo'yu indir
+        uses: actions/checkout@v4
+
+      - name: JDK 17 kur
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Gradle'ı kur (wrapper gerektirmeden)
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+
+      - name: Debug APK derle
+        run: gradle :app:assembleDebug --stacktrace
+
+      - name: Release APK derle
+        run: gradle :app:assembleRelease --stacktrace
+
+      - name: Debug APK'yı Artifact olarak yükle
+        uses: actions/upload-artifact@v4
+        with:
+          name: EditlyAI-debug-apk
+          path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+
+      - name: Release APK'yı Artifact olarak yükle
+        uses: actions/upload-artifact@v4
+        with:
+          name: EditlyAI-release-apk
+          path: app/build/outputs/apk/release/*.apk
+          if-no-files-found: error
