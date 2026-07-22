@@ -81,9 +81,13 @@ class BillingManager(
             .setProductList(listOf(product))
             .build()
 
-        billingClient.queryProductDetailsAsync(params) { result, productDetailsResult ->
+        billingClient.queryProductDetailsAsync(params) { result, productDetailsList ->
             if (result.responseCode == BillingClient.BillingResponseCode.OK) {
-                _productDetails.value = productDetailsResult.productDetailsList.firstOrNull()
+                // NOT: billing-ktx 7.x'te queryProductDetailsAsync callback'i
+                // doğrudan List<ProductDetails> döner (QueryProductDetailsResult
+                // sarmalayıcısı - .productDetailsList/.unfetchedProductList -
+                // ancak Billing Library 8.0.0 ile geldi).
+                _productDetails.value = productDetailsList.firstOrNull()
             } else {
                 Log.e(TAG, "Ürün bilgisi alınamadı: ${result.debugMessage}")
             }
