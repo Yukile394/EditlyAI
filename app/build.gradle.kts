@@ -46,6 +46,10 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
+        // Material3'teki TopAppBar, RangeSlider gibi bazı bileşenler
+        // @ExperimentalMaterial3Api ile işaretli; opt-in yapılmazsa Kotlin
+        // derleme HATASI verir (sadece uyarı değil).
+        freeCompilerArgs += listOf("-opt-in=androidx.compose.material3.ExperimentalMaterial3Api")
     }
 
     buildFeatures {
