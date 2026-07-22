@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name">Editly AI</string>
+
+    <!-- Ana Sayfa -->
+    <string name="home_title">Ana Sayfa</string>
+    <string name="home_upload_hint">Fotoğraf veya video yükle</string>
+    <string name="home_select_button">Seç</string>
+    <string name="home_quick_actions">Hızlı İşlemler</string>
+    <string name="home_gallery_photo">Galeriden Seç</string>
+    <string name="home_camera_photo">Kameradan Fotoğraf</string>
+    <string name="home_gallery_video">Galeriden Video</string>
+    <string name="home_camera_video">Kameradan Video</string>
+    <string name="home_credits_left">Kalan hakkın: %1$d / %2$d</string>
+    <string name="home_credits_unlimited">Sınırsız (Premium)</string>
+    <string name="home_credits_refresh">Haklar her gün 00:00\'da yenilenir</string>
+    <string name="nav_home">Ana Sayfa</string>
+    <string name="nav_projects">Projelerim</string>
+    <string name="nav_settings">Ayarlar</string>
+
+    <!-- Medya Seç -->
+    <string name="media_picker_title">Medya Seç</string>
+    <string name="media_tab_all">Tümü</string>
+    <string name="media_tab_photo">Fotoğraf</string>
+    <string name="media_tab_video">Video</string>
+
+    <!-- Düzenle -->
+    <string name="edit_title">Düzenle</string>
+    <string name="edit_save">Kaydet</string>
+    <string name="edit_tab_text">Metin</string>
+    <string name="edit_tab_style">Stil</string>
+    <string name="edit_tab_color">Renk</string>
+    <string name="edit_tab_position">Konum</string>
+    <string name="edit_tab_effect">Efekt</string>
+    <string name="edit_apply">Uygula</string>
+    <string name="edit_detecting">Yazılar algılanıyor…</string>
+    <string name="edit_no_text_found">Görselde yazı bulunamadı. Yeni bir metin kutusu ekleyebilirsin.</string>
+    <string name="edit_add_text_box">Metin Kutusu Ekle</string>
+
+    <!-- Dışa Aktar -->
+    <string name="export_title">Dışa Aktar</string>
+    <string name="export_format">Format</string>
+    <string name="export_quality">Kalite</string>
+    <string name="export_save_gallery">Galeriye Kaydet</string>
+    <string name="export_button">Dışa Aktar</string>
+    <string name="export_share">Paylaş</string>
+    <string name="export_success">Başarıyla kaydedildi</string>
+
+    <!-- Paywall -->
+    <string name="paywall_title">Premium\'a Geç</string>
+    <string name="paywall_subtitle">Sınırsız düzenleme, reklamsız deneyim ve en yüksek kalite</string>
+    <string name="paywall_price">50 TL / ay</string>
+    <string name="paywall_feature_unlimited">Günlük sınırsız yapay zekâ düzenleme</string>
+    <string name="paywall_feature_no_ads">Reklamsız kullanım</string>
+    <string name="paywall_feature_fast">Daha hızlı yapay zekâ işleme</string>
+    <string name="paywall_feature_quality">En yüksek kalite dışa aktarma (4K)</string>
+    <string name="paywall_feature_priority">Öncelikli sunucu erişimi</string>
+    <string name="paywall_subscribe">Premium\'a Abone Ol</string>
+    <string name="paywall_restore">Satın Alımları Geri Yükle</string>
+    <string name="paywall_watch_ad">Reklam İzle, +1 Hak Kazan</string>
+
+    <string name="error_generic">Bir hata oluştu, lütfen tekrar deneyin.</string>
+    <string name="error_no_credits">Günlük hakların bitti.</string>
+    <string name="error_permission_denied">Bu özellik için izin gerekiyor.</string>
+</resources>
