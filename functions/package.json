@@ -1,0 +1,18 @@
+{
+  "name": "editly-ai-functions",
+  "description": "Editly AI - sunucu tarafı satın alma doğrulama ve günlük hak kontrolü",
+  "engines": {
+    "node": "20"
+  },
+  "main": "index.js",
+  "scripts": {
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.3.1",
+    "firebase-functions": "^5.0.1",
+    "googleapis": "^140.0.1"
+  },
+  "private": true
+}
