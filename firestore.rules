@@ -1,0 +1,18 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // users/{uid} belgesi; premium durumu ve günlük hak sayacını tutar.
+    // KRİTİK: İstemcinin (Android uygulaması) bu alanları DOĞRUDAN
+    // yazmasına izin VERİLMEZ - aksi halde bir kullanıcı kendi isPremium
+    // veya creditsUsed alanını manuel değiştirip sistemi kandırabilir.
+    // Tüm yazmalar sadece Cloud Functions (Admin SDK, kuralları by-pass eder)
+    // üzerinden, verifyPurchase / consumeCredit / claimRewardedCredit
+    // fonksiyonları aracılığıyla yapılmalıdır.
+    match /users/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow write: if false; // Sadece Admin SDK (Cloud Functions) yazabilir
+    }
+  }
+}
