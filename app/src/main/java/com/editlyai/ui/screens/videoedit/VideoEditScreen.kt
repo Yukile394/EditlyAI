@@ -2,6 +2,7 @@ package com.editlyai.app.ui.screens.videoedit
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -15,7 +16,10 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.editlyai.app.data.media.MediaSaver
@@ -94,7 +98,36 @@ fun VideoEditScreen(
                 uiState.previewFrame != null -> {
                     val frame = uiState.previewFrame!!
                     val imageBitmap = remember(frame) { frame.asImageBitmap() }
-                    Canvas(modifier = Modifier.fillMaxSize()) {
+                    var canvasSize by remember { mutableStateOf(IntSize.Zero) }
+                    Canvas(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .onSizeChanged { canvasSize = it }
+                            .pointerInput(frame, uiState.textBlocks) {
+                                detectTapGestures { tapOffset ->
+                                    if (canvasSize.width == 0 || canvasSize.height == 0) return@detectTapGestures
+                                    val scale = minOf(
+                                        canvasSize.width / frame.width.toFloat(),
+                                        canvasSize.height / frame.height.toFloat()
+                                    )
+                                    val drawWidth = frame.width * scale
+                                    val drawHeight = frame.height * scale
+                                    val offsetX = (canvasSize.width - drawWidth) / 2
+                                    val offsetY = (canvasSize.height - drawHeight) / 2
+                                    val tapped = uiState.textBlocks.lastOrNull { block ->
+                                        val left = offsetX + block.boundingBox.left * scale
+                                        val top = offsetY + block.boundingBox.top * scale
+                                        val right = offsetX + block.boundingBox.right * scale
+                                        val bottom = offsetY + block.boundingBox.bottom * scale
+                                        tapOffset.x in left..right && tapOffset.y in top..bottom
+                                    }
+                                    if (tapped != null) {
+                                        viewModel.selectBlock(tapped.id)
+                                        selectedTab = VideoEditTab.METIN
+                                    }
+                                }
+                            }
+                    ) {
                         val scale = minOf(size.width / frame.width, size.height / frame.height)
                         val drawWidth = frame.width * scale
                         val drawHeight = frame.height * scale
