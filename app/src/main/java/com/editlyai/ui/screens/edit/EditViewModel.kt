@@ -64,7 +64,14 @@ class EditViewModel(application: Application) : AndroidViewModel(application) {
         val context = getApplication<Application>()
         return if (android.os.Build.VERSION.SDK_INT >= 28) {
             val source = android.graphics.ImageDecoder.createSource(context.contentResolver, uri)
-            android.graphics.ImageDecoder.decodeBitmap(source)
+            android.graphics.ImageDecoder.decodeBitmap(source) { decoder, _, _ ->
+                // KRİTİK: ImageDecoder varsayılan olarak HARDWARE config bitmap
+                // döndürür; bu tip üzerinde getPixel()/copy() ile piksel
+                // erişimi ÇALIŞMAZ (ColorSampler ve TextRenderer'ın ihtiyacı
+                // olan şey tam da bu). isMutableRequired = true, decoder'ı
+                // yazılım (software) bellek ayırmaya zorlar.
+                decoder.isMutableRequired = true
+            }
         } else {
             @Suppress("DEPRECATION")
             MediaStore.Images.Media.getBitmap(context.contentResolver, uri)
@@ -109,4 +116,3 @@ class EditViewModel(application: Application) : AndroidViewModel(application) {
         textRecognizer.close()
     }
 }
-
