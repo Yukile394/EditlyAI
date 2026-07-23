@@ -11,6 +11,8 @@ import com.editlyai.app.ui.screens.export.ExportScreen
 import com.editlyai.app.ui.screens.home.HomeScreen
 import com.editlyai.app.ui.screens.mediapicker.MediaPickerScreen
 import com.editlyai.app.ui.screens.paywall.PaywallScreen
+import com.editlyai.app.ui.screens.projects.ProjectsScreen
+import com.editlyai.app.ui.screens.settings.SettingsScreen
 import com.editlyai.app.ui.screens.videoedit.VideoEditScreen
 import java.net.URLDecoder
 import java.net.URLEncoder
@@ -22,6 +24,8 @@ object Routes {
     const val VIDEO_EDIT = "video_edit/{mediaUri}"
     const val EXPORT = "export/{mediaUri}"
     const val PAYWALL = "paywall"
+    const val SETTINGS = "settings"
+    const val PROJECTS = "projects"
 
     fun edit(uri: String, isVideo: Boolean) =
         "edit/${URLEncoder.encode(uri, "UTF-8")}/$isVideo"
@@ -39,8 +43,26 @@ fun EditlyNavGraph() {
         composable(Routes.HOME) {
             HomeScreen(
                 onNavigateToPicker = { navController.navigate(Routes.MEDIA_PICKER) },
+                onNavigateToPaywall = { navController.navigate(Routes.PAYWALL) },
+                onNavigateToSettings = { navController.navigate(Routes.SETTINGS) },
+                onNavigateToProjects = { navController.navigate(Routes.PROJECTS) },
+                onMediaCaptured = { uri, isVideo ->
+                    if (isVideo) {
+                        navController.navigate(Routes.videoEdit(uri))
+                    } else {
+                        navController.navigate(Routes.edit(uri, isVideo))
+                    }
+                }
+            )
+        }
+        composable(Routes.SETTINGS) {
+            SettingsScreen(
+                onBack = { navController.popBackStack() },
                 onNavigateToPaywall = { navController.navigate(Routes.PAYWALL) }
             )
+        }
+        composable(Routes.PROJECTS) {
+            ProjectsScreen(onBack = { navController.popBackStack() })
         }
         composable(Routes.MEDIA_PICKER) {
             MediaPickerScreen(
